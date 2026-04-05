@@ -11,7 +11,7 @@
   "packageRules": [
     {
       "description": "Group all React and Next.js core packages together",
-      "matchPackagePatterns": ["^next", "^react", "^react-dom"],
+      "matchPackageNames": ["next", "react", "react-dom"],
       "groupName": "Next.js Core Packages"
     },
     {
