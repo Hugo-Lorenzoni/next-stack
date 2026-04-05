@@ -1,6 +1,33 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
-  ]
+    "config:recommended",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone"
+  ],
+  "timezone": "UTC",
+  "schedule": ["before 5am on monday"],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "description": "Group all React and Next.js core packages together",
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "groupName": "Next.js Core Packages"
+    },
+    {
+      "description": "Group all @types packages",
+      "matchPackagePatterns": ["^@types/"],
+      "groupName": "Types Definitions",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Automerge patch and minor updates for devDependencies",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    }
+  ],
+  "platformAutomerge": true,
+  "rangeStrategy": "bump"
 }
