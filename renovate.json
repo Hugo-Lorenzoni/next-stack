@@ -18,6 +18,7 @@
       "description": "Group all @types packages",
       "matchPackagePatterns": ["^@types/"],
       "groupName": "Types Definitions",
+      "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
     },
     {
