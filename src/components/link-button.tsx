@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import type { AnchorHTMLAttributes, PropsWithChildren } from "react";
-import type { VariantProps } from "class-variance-authority";
+import type { AnchorHTMLAttributes, PropsWithChildren } from "react"
+import type { VariantProps } from "class-variance-authority"
 
-import { buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button"
 
 type LinkButtonProps = PropsWithChildren<
   AnchorHTMLAttributes<HTMLAnchorElement> &
     VariantProps<typeof buttonVariants> & {
-      className?: string;
+      className?: string
     }
->;
+>
 
 export function LinkButton({
   children,
@@ -23,5 +23,5 @@ export function LinkButton({
     <a className={buttonVariants({ variant, size, className })} {...props}>
       {children}
     </a>
-  );
+  )
 }
