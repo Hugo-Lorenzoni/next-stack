@@ -1,31 +1,81 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":prHourlyLimitNone",
-    ":prConcurrentLimitNone"
-  ],
+  "extends": ["config:recommended"],
   "timezone": "UTC",
-  "schedule": ["before 5am on monday"],
+  "prConcurrentLimit": 5,
+  "branchConcurrentLimit": 5,
   "dependencyDashboard": true,
+  "minimumReleaseAge": "2 days",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 5am on monday"],
+    "automerge": true
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "automerge": true,
+    "automergeType": "pr"
+  },
   "packageRules": [
     {
-      "description": "Group all React and Next.js core packages together",
-      "matchPackageNames": ["next", "react", "react-dom"],
-      "groupName": "Next.js Core Packages"
+      "description": "Group non-major updates for lint/format/type tooling",
+      "matchPackageNames": [
+        "eslint",
+        "eslint-config-next",
+        "prettier",
+        "prettier-plugin-tailwindcss",
+        "typescript"
+      ],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "Tooling",
+      "automerge": true
     },
     {
-      "description": "Group all @types packages",
+      "description": "Group patch/minor type definition updates",
       "matchPackagePatterns": ["^@types/"],
-      "groupName": "Types Definitions",
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "Types",
+      "automerge": true
+    },
+    {
+      "description": "Group patch/minor non-core runtime libraries",
+      "matchPackageNames": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "clsx",
+        "lucide-react",
+        "next-themes",
+        "shadcn",
+        "tailwind-merge",
+        "tw-animate-css"
+      ],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "Runtime Libraries",
+      "automerge": true
+    },
+    {
+      "description": "Automerge patch and minor updates by default",
       "matchUpdateTypes": ["patch", "minor"],
       "automerge": true
     },
     {
-      "description": "Automerge patch and minor updates for devDependencies",
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["patch", "minor"],
+      "description": "Automerge core runtime patch updates only",
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "matchUpdateTypes": ["patch"],
+      "groupName": "Core Runtime Patches",
       "automerge": true
+    },
+    {
+      "description": "Never automerge core runtime minor/major updates",
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "matchUpdateTypes": ["minor", "major"],
+      "groupName": "Core Runtime Review Required",
+      "automerge": false
+    },
+    {
+      "description": "Never automerge major updates",
+      "matchUpdateTypes": ["major"],
+      "automerge": false
     }
   ],
   "platformAutomerge": true,
